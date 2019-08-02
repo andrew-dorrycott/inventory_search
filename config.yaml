@@ -11,13 +11,14 @@ postgresql:
     database: inventory
     host: 127.0.0.1
     port: 5432
+    sqlalchemy_uri: postgresql://{username}:{password}@{host}:{port}/{database}
 
 logging:
     version: 1
     disable_existing_loggers: false
     formatters:
         standard:
-            format: "%(asctime)s [%(levelname)s] (%(threadName)s) %(name)s: %(request_id)s - %(message)s"
+            format: "%(asctime)s [%(levelname)s] (%(threadName)s) %(name)s: %(message)s"
     handlers:
         default:
             level: DEBUG
