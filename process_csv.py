@@ -7,6 +7,9 @@ import sqlalchemy
 from sqlalchemy.orm import sessionmaker
 import yaml
 
+# Application imports
+from models.products import Product
+
 
 def load_config():
     with open("config.yaml", "r") as _file:
@@ -35,8 +38,11 @@ if __name__ == "__main__":
     with open(sys.argv[1], "r") as _file:
         reader = csv.DictReader(_file)
         for row in reader:
-            data = {
-                key.lower().strip(): value.replace("$", "")
-                for key, value in row.items()
-            }
-            # sqlalchemy insert data
+            new_product = Product(
+                **{
+                    key.lower().strip(): value.replace("$", "").strip()
+                    for key, value in row.items()
+                }
+            )
+            session.add(new_product)
+        session.commit()
