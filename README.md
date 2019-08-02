@@ -46,9 +46,17 @@ psql -h 127.0.0.1 -d inventory -U inventory -f database_setup.sql
 ```
 python3 process_csv.py data.csv
 ```
+* Configure Flask
+```
+export FLASK_ENV=dev
+export FLASK_APP=run.py
+```
+* Run Flask
+```
+python3 -m flask run
+```
 
 ```
-<Process CSV commands>
 <nginx commands>
 <Reboot commands>
 ```
