@@ -1,0 +1,29 @@
+app:
+    name: inventory
+    host: 0.0.0.0
+    port: 8080
+    debug: False
+    profile: False
+
+postgresql:
+    username: inventory
+    password: inventory
+    database: inventory
+    host: 127.0.0.1
+    port: 5432
+
+logging:
+    version: 1
+    disable_existing_loggers: false
+    formatters:
+        standard:
+            format: "%(asctime)s [%(levelname)s] (%(threadName)s) %(name)s: %(request_id)s - %(message)s"
+    handlers:
+        default:
+            level: DEBUG
+            class: logging.StreamHandler
+            formatter: standard
+    root:
+        level: DEBUG
+        handlers:
+            - default
