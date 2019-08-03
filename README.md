@@ -1,9 +1,7 @@
 
 # Requirements
 * Python 3.6+
-* nginx
 * postgresql
-* ReactJS
 
 
 # Standards
@@ -22,7 +20,7 @@
 ## Install Necessary Packages
 ```
 pip3 install requirements.txt
-sudo apt install nginx postgresql
+sudo apt install postgresql
 ```
 
 ## Setup Application
@@ -56,11 +54,10 @@ export FLASK_APP=run.py
 python3 -m flask run
 ```
 
-```
-<nginx commands>
-<Reboot commands>
-```
-
-
 # Usage
-* From any browser, go to https://127.0.0.1:8080/
+* From any browser, go to http://127.0.0.1:5000/
+
+
+# Possibilities
+* Use nginx to handle Auth and Static File severing for requests
+* Use ReactJS for cleaner UI and modern Javascript design
