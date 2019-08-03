@@ -32,13 +32,13 @@ class Product(Base):
 
     def to_dict(self):
         return {
-            "id": self.id,
-            "description": self.description,
-            "lastsold": self.lastsold.strftime("%Y-%m-%d"),
-            "shelflife": self.shelflife,
-            "department": self.department,
-            "price": self.price,
-            "unit": self.unit,
-            "xfor": self.xfor,
-            "cost": self.cost,
+            "ID": self.id,
+            "Description": self.description,
+            "lastSold": self.lastsold.strftime("%Y-%m-%d"),
+            "ShelfLife": self.shelflife,
+            "Department": self.department,
+            "Price": self.price,
+            "Unit": self.unit,
+            "xFor": self.xfor,
+            "Cost": self.cost,
         }
