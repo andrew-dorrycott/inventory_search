@@ -21,16 +21,34 @@ class Product(Base):
     xfor = sqlalchemy.Column(sqlalchemy.Integer)
     cost = sqlalchemy.Column(sqlalchemy.Float)
 
+    def __init__(self, **kwargs):
+        """
+        Initalizer
+
+        :returns: Nothing
+        :rtype: None
+        """
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
     def __repr__(self):
+        """
+        Custom String representation
+
+        :returns: String representation of the data
+        :rtype: str
+        """
         return "<Product(id='{id}', description='{description}')>".format(
             **self.__dict__
         )
 
-    def __init__(self, **kwargs):
-        for key, value in kwargs.items():
-            setattr(self, key, value)
-
     def to_dict(self):
+        """
+        Custom Dictionary/Json-able representation
+
+        :returns: Dict representation of the data
+        :rtype: dict
+        """
         return {
             "ID": self.id,
             "Description": self.description,

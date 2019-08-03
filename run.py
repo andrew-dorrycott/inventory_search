@@ -16,11 +16,25 @@ LOGGER = logging.getLogger(__name__)
 
 
 def load_config():
+    """
+    Loads the config from config.yaml
+
+    :returns: Dict of loaded config.yaml
+    :rtype: dict
+    """
     with open("config.yaml", "r") as _file:
         return yaml.load(_file, Loader=yaml.FullLoader)
 
 
 def load_db(config):
+    """
+    Creates a SQLAlchemy session to be used by the controllers
+
+    :param config: Configuration information provided by :meth:load_config
+    :type config: dict
+    :returns: SQLAlchemy Session
+    :rtype: sqlalchemy.orm.session.Session
+    """
     engine = sqlalchemy.create_engine(
         config["postgresql"]["sqlalchemy_uri"].format(**config["postgresql"])
     )
@@ -29,6 +43,12 @@ def load_db(config):
 
 
 def create_app():
+    """
+    Creates the base Flask application for running
+
+    :returns: Flask app object
+    :rtype: flask.Flask
+    """
     app = flask.Flask(__name__, instance_relative_config=True)
 
     config = load_config()
@@ -41,16 +61,40 @@ def create_app():
     # Controllers (will be moved later)
     @app.route("/")
     def default():
-        return "Default entry, don't mind me"
+        """
+        Default controller if someone goes to the base host not knowing to go
+        to view
+        :returns: Text for the user
+        :rtype: str
+        """
+        return "Psst, go to /view instead!"
 
-    @app.route("/test/")
-    @app.route("/test/<name>")
-    def test(name=None):
-        return flask.render_template("test.html", name=flask.escape(name))
+    @app.route("/view")
+    def view():
+        """
+        Page users can use to search from
+
+        :returns: Rendered template
+        :rtype: str?
+        """
+        thing = flask.render_template("view.html")
+        LOGGER.debug(type(thing))
+        return thing
 
     @app.route("/search/<token>")
     @app.route("/search/<field>/<token>")
     def search(token, field=None):
+        """
+        REST-like endpoint to do general searches or specified searches
+
+        :param token: Full or partial words, integers, floats, or dates
+        :type token: str
+        :param field: Specific column searching through
+        :type field: str
+
+        :returns: Json with results and amount or Json with error message
+        :rtype: json
+        """
         # Search DB with the provided field and token
         query = session.query(Product)
 
@@ -116,14 +160,6 @@ def create_app():
             session.rollback()
             LOGGER.exception(error)
             return json.dumps({"error": "Catastrophic error happened"})
-
-    @app.route("/query")
-    def query():
-        # Grab all data from post
-        results = [{"id": 123, "description": "hard coded test"}]
-        return json.dumps({"results": results, "count": len(results)})
-
-    return app
 
 
 if __name__ == "__main__":
