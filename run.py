@@ -75,11 +75,9 @@ def create_app():
         Page users can use to search from
 
         :returns: Rendered template
-        :rtype: str?
+        :rtype: str
         """
-        thing = flask.render_template("view.html")
-        LOGGER.debug(type(thing))
-        return thing
+        return flask.render_template("view.html")
 
     @app.route("/search/<token>")
     @app.route("/search/<field>/<token>")
@@ -160,6 +158,8 @@ def create_app():
             session.rollback()
             LOGGER.exception(error)
             return json.dumps({"error": "Catastrophic error happened"})
+
+    return app
 
 
 if __name__ == "__main__":
