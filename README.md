@@ -1,3 +1,6 @@
+# Purpose
+* A lightweight application to search a Postgresql database with product information
+
 
 # Requirements
 * Python 3.6+
